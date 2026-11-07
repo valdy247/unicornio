@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0c13" />
+  <title>ORBIT Studio — Unicornio Labs</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a href="../README.md" class="brand" aria-label="Unicornio Labs">
+        <span class="brand-mark">◈</span>
+        <span>UNICORNIO <strong>ORBIT</strong><small>LABS / EXPERIMENT 01</small></span>
+      </a>
+      <div class="top-right"><span class="chip"><span class="pulse-dot"></span> PROTOTIPO LOCAL</span><span class="version">v0.1</span></div>
+    </header>
+    <main class="workspace">
+      <section class="editor">
+        <div class="section-title"><div><p class="eyebrow">EDITOR ESPACIAL</p><h1>Haz que el video <em>reaccione.</em></h1></div>
+          <span class="subtle">PERSONA + TEXTO 3D + MOVIMIENTO</span></div>
+        <div class="viewport-card">
+          <div class="viewport-toolbar"><span class="live"><span class="pulse-dot"></span> LIVE PREVIEW</span><span id="resolutionLabel">960 × 540 · DEMO</span><span id="fpsLabel">PREPARADO</span></div>
+          <div class="viewport" id="viewport">
+            <canvas id="composite" width="960" height="540" aria-label="Vista previa interactiva del video"></canvas>
+            <video id="sourceVideo" playsinline muted preload="auto" hidden></video>
+            <div class="drop-overlay" id="dropOverlay">Suelta aquí tu video</div>
+            <div class="viewport-notice" id="viewportNotice">Primero sube un video o prueba la animación de ejemplo</div>
+          </div>
+          <div class="transport">
+            <button class="icon-button" id="playPause" aria-label="Reproducir o pausar" title="Reproducir o pausar">▶</button>
+            <input id="timeline" type="range" min="0" max="1000" value="0" aria-label="Posición del video" />
+            <span class="timecode" id="timecode">00:00 / DEMO</span>
+            <button class="icon-button" id="resetBtn" title="Reiniciar escena">↺</button>
+          </div>
+        </div>
+        <div class="bottom-panels">
+          <div class="info-card"><span class="mini-icon">◎</span><div><strong>Seguimiento corporal</strong><p id="trackingStatus">Inicializando…</p></div></div>
+          <div class="info-card"><span class="mini-icon">↗</span><div><strong>Física visual</strong><p id="collisionStatus">En espera de contacto</p></div></div>
+          <div class="info-card"><span class="mini-icon">◷</span><div><strong>Privacidad</strong><p>Tu video se procesa en este navegador</p></div></div>
+        </div>
+      </section>
+      <aside class="inspector">
+        <div class="panel-header"><p class="eyebrow">CONTROLES</p><h2>Tu escena</h2><p>Crea texto 3D y experimenta con el movimiento.</p></div>
+        <div class="control-card">
+          <label class="label" for="videoFile">01 / Video original</label>
+          <label class="upload" for="videoFile"><span class="upload-icon">↑</span><span><strong>Seleccionar video</strong><small>MP4, WebM o MOV compatible</small></span><span class="upload-chevron">↗</span></label>
+          <input type="file" id="videoFile" accept="video/*" hidden />
+          <p class="hint" id="fileName">No has seleccionado un video.</p>
+        </div>
+        <div class="control-card">
+          <label class="label" for="textInput">02 / Objeto 3D</label>
+          <input id="textInput" type="text" maxlength="18" value="UNICORNIO" autocomplete="off" aria-label="Texto 3D" />
+          <div class="two-cols">
+            <label class="field">Color <input type="color" id="colorInput" value="#c5a3ff" /></label>
+            <label class="field">Tamaño <input type="range" id="sizeInput" min="40" max="135" value="88" /></label>
+          </div>
+          <p class="hint">Arrastra el texto en la vista previa para colocarlo.</p>
+        </div>
+        <div class="control-card">
+          <label class="label">03 / Interacción</label>
+          <div class="two-cols">
+            <label class="field">Profundidad visual
+              <select id="layerMode"><option value="front">Persona delante</option><option value="back">Texto delante</option></select>
+            </label>
+            <label class="field">Intensidad
+              <input id="strengthInput" type="range" min="20" max="150" value="90" />
+            </label>
+          </div>
+          <label class="checkline"><input id="trackingInput" type="checkbox" checked /> Activar detección de contacto</label>
+          <label class="checkline"><input id="skeletonInput" type="checkbox" /> Mostrar puntos del cuerpo</label>
+          <button id="simulateBtn" class="btn btn-outline" type="button">⚡ Simular salto / impacto</button>
+          <p class="hint">El contacto es una aproximación basada en puntos del cuerpo, no una simulación física real.</p>
+        </div>
+        <div class="control-card">
+          <label class="label">04 / Exportar</label>
+          <button id="exportBtn" class="btn btn-primary" type="button">↓ Exportar prueba en WebM</button>
+          <p class="hint">Hasta 8 segundos, sin audio. Para MP4 y sombras físicas precisas hará falta una versión posterior.</p>
+        </div>
+        <div class="footnote"><span class="info-glyph">i</span> ORBIT-01 es un prototipo de investigación. La detección requiere conexión para descargar una vez el modelo y las bibliotecas.</div>
+      </aside>
+    </main>
+    <footer><span>UNICORNIO LABS © 2026</span><span>ORBIT-01 · SIN SUBIR EL VIDEO A UN SERVIDOR</span></footer>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
