@@ -83,3 +83,16 @@ python zero_03.py
 Compara `full`, `zero_02` y `adaptive`, y guarda los tiempos en `results/zero_03.json`.
 
 Detalles: [ZERO-03](docs/ZERO_03.md). No es una técnica original demostrada, sino otra referencia necesaria para una futura investigación.
+
+
+## ZERO-04: reutilizar cálculos con movimiento conocido (experimento controlado)
+
+Este nuevo experimento compara un filtrado bilateral completo con la reutilización por bloques cuando el **desplazamiento de cámara ya es conocido**. Es una prueba optimista sobre movimiento sintético, **no** una solución a la estimación de movimiento real.
+
+```powershell
+git pull
+python -m unittest discover -s tests -v
+python zero_04.py
+```
+
+Informe: `results/zero_04.json`. Metodología y límites: [ZERO-04](docs/ZERO_04.md).
