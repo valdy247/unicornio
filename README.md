@@ -96,3 +96,20 @@ python zero_04.py
 ```
 
 Informe: `results/zero_04.json`. Metodología y límites: [ZERO-04](docs/ZERO_04.md).
+
+
+---
+
+## ✨ ORBIT Studio — Experimento de interacción 3D
+
+Prototipo de editor de video local: letras 3D arrastrables, detección corporal con MediaPipe, oclusión básica y rebote visual al estimar contacto con los pies. También incluye una simulación manual y exportación WebM sin audio.
+
+**[Abrir las instrucciones de ORBIT-01](orbit/README.md)** · **[Ver el editor](orbit/index.html)**
+
+Para ejecutar la página localmente desde la raíz del repositorio:
+
+```powershell
+python -m http.server 8000
+```
+
+Después abre `http://localhost:8000/orbit/` en Chrome o Edge. Hay limitaciones conocidas: profundidad no reconstruida, cámara no anclada y contacto heurístico, no físico.
