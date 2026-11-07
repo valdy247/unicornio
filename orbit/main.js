@@ -285,7 +285,7 @@ function processPose(timestamp) {
 async function initializePose() {
   try {
     setStatus(ui.trackingStatus, "Descargando modelo de pose…");
-    const visionModule = await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm");
+    const visionModule = await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/vision_bundle.mjs");
     const { FilesetResolver, PoseLandmarker } = visionModule;
     const vision = await FilesetResolver.forVisionTasks(
       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
