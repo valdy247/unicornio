@@ -68,3 +68,18 @@ Prueba opcional con un video propio:
 Lee las explicaciones, limitaciones y resultados en [ZERO-02](docs/ZERO_02.md).
 
 **No confundir:** esta prueba mide el costo de un filtro de desenfoque, no la generación de video con IA. Una aceleración en este experimento no implica la misma mejora en modelos generativos.
+
+
+## ZERO-03: clasificación rápida para evitar trabajo inútil
+
+Nuevo experimento CPU: muestreo ligero para decidir cuándo conviene calcular el fotograma completo y cuándo intentar la actualización regional.
+
+```powershell
+git pull
+python -m unittest discover -s tests -v
+python zero_03.py
+```
+
+Compara `full`, `zero_02` y `adaptive`, y guarda los tiempos en `results/zero_03.json`.
+
+Detalles: [ZERO-03](docs/ZERO_03.md). No es una técnica original demostrada, sino otra referencia necesaria para una futura investigación.
