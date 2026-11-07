@@ -42,6 +42,7 @@ let frameCounter = 0;
 let dragging = false;
 let exportInProgress = false;
 let demoJumpTime = -1e9;
+let autoPersonFront = false; // simple interaction timeline, NOT estimated physical depth
 
 const state = { x: 0.50, y: 0.61, size: 0.88, text: "UNICORNIO", strength: 0.9 };
 const physical = createPhysics();
@@ -208,7 +209,8 @@ function updateMask(result) {
 }
 
 function drawSubject() {
-  if (!hasSegmentation || ui.layer.value !== "front" || !sourceUrl) return;
+  if (!hasSegmentation || !sourceUrl) return;
+  if (ui.layer.value === "back" || (ui.layer.value === "auto" && !autoPersonFront)) return;
   const w = stage.width, h = stage.height;
   subjectCtx.clearRect(0, 0, w, h);
   subjectCtx.globalCompositeOperation = "source-over";
@@ -257,7 +259,8 @@ function processPose(timestamp) {
         if (hasFootContact(current, lastPose, getTextBounds(), (timestamp - lastPoseTime) / 1000)) {
           impact(physical, state.strength);
           lastContactTime = timestamp;
-          setStatus(ui.collisionStatus, "Impacto visual detectado ⚡");
+          autoPersonFront = true;
+          setStatus(ui.collisionStatus, "Contacto estimado · el texto queda detrás ⚡");
         }
       }
     } else {
@@ -346,6 +349,7 @@ function loadVideo(file) {
   resetPhysics();
   lastPose = null;
   hasSegmentation = false;
+  autoPersonFront = false;
   video.onloadedmetadata = async () => {
     setStageSize(video.videoWidth, video.videoHeight);
     video.currentTime = 0;
@@ -465,10 +469,12 @@ ui.strength.addEventListener("input", () => { state.strength = Number(ui.strengt
 ui.simulate.addEventListener("click", () => {
   demoJumpTime = performance.now();
   impact(physical, state.strength);
-  setStatus(ui.collisionStatus, "Impacto simulado ⚡");
+  autoPersonFront = true;
+  setStatus(ui.collisionStatus, "Impacto simulado · texto detrás ⚡");
 });
 ui.reset.addEventListener("click", () => {
   resetPhysics();
+  autoPersonFront = false;
   state.x = 0.5;
   state.y = 0.61;
   if (sourceUrl) { video.currentTime = 0; lastVideoTime = -1; }
@@ -477,7 +483,7 @@ ui.reset.addEventListener("click", () => {
   setStatus(ui.collisionStatus, "En espera de contacto");
 });
 ui.playPause.addEventListener("click", () => {
-  if (!sourceUrl) { demoJumpTime = performance.now(); impact(physical, state.strength); return; }
+  if (!sourceUrl) { demoJumpTime = performance.now(); impact(physical, state.strength); autoPersonFront = true; return; }
   if (video.paused) video.play().catch(console.warn);
   else video.pause();
 });
@@ -487,6 +493,7 @@ ui.timeline.addEventListener("input", () => {
     lastVideoTime = -1;
     lastPose = null;
     hasSegmentation = false;
+    autoPersonFront = false;
   }
 });
 ui.export.addEventListener("click", exportPreview);
