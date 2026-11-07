@@ -156,6 +156,13 @@ function drawDemo(timestamp) {
     const y = horizon + Math.pow(i / 6, 1.3) * (height - horizon);
     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
   }
+  drawDemoAvatar(timestamp);
+  ctx.textAlign = "left"; ctx.font = "600 12px system-ui"; ctx.fillStyle = "#ffffff88";
+  ctx.fillText("DEMO · AÑADE TU PROPIO VIDEO", 18, 24);
+}
+
+function drawDemoAvatar(timestamp) {
+  const width = stage.width, height = stage.height;
   const elapsed = (timestamp - demoJumpTime) / 1000;
   const jump = elapsed >= 0 && elapsed < 1.05 ? Math.sin(Math.PI * elapsed / 1.05) * height * 0.23 : 0;
   const x = width * 0.49, y = height * 0.75 - jump;
@@ -174,8 +181,6 @@ function drawDemo(timestamp) {
   ctx.fillStyle = "#201b28";
   ctx.beginPath(); ctx.arc(x, y - 155, 17, Math.PI, 2 * Math.PI); ctx.fill();
   ctx.restore();
-  ctx.textAlign = "left"; ctx.font = "600 12px system-ui"; ctx.fillStyle = "#ffffff88";
-  ctx.fillText("DEMO · AÑADE TU PROPIO VIDEO", 18, 24);
 }
 
 function updateMask(result) {
@@ -327,6 +332,7 @@ function tick(timestamp) {
   updateTextTransform();
   renderer.render(scene, camera);
   ctx.drawImage(renderer.domElement, 0, 0, stage.width, stage.height);
+  if (!sourceUrl && autoPersonFront) drawDemoAvatar(timestamp);
   drawSubject();
   drawSkeleton(lastPose);
   if (sourceUrl) updateTime();
