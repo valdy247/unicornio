@@ -45,3 +45,26 @@ Las dos imágenes finales se guardarán en `results/`, que **no** se sube a GitH
 - Los tiempos no incluyen leer/decomprimir el video ni escribir las imágenes, porque son compartidos por ambos métodos.
 
 **Importante:** procesar solo las regiones modificadas es una técnica conocida. ZERO-01 sirve para establecer una referencia verificable, no es una patente ni prueba de novedad. Véase [registro de investigación](docs/RESEARCH_LOG.md).
+
+
+## ZERO-02: límites del procesamiento incremental
+
+Comparamos tres situaciones: un objeto moviéndose con la cámara quieta, movimiento global de cámara y cambios de brillo en toda la escena. Incluye tres repeticiones y guarda los resultados en un archivo JSON.
+
+En PowerShell, desde la carpeta clonada:
+
+```powershell
+git pull
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe zero_02.py
+```
+
+Prueba opcional con un video propio:
+
+```powershell
+.\.venv\Scripts\python.exe zero_02.py --scenario video --video "C:\Videos\prueba.mp4"
+```
+
+Lee las explicaciones, limitaciones y resultados en [ZERO-02](docs/ZERO_02.md).
+
+**No confundir:** esta prueba mide el costo de un filtro de desenfoque, no la generación de video con IA. Una aceleración en este experimento no implica la misma mejora en modelos generativos.
